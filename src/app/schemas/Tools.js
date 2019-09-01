@@ -15,7 +15,6 @@ const Tools = new mongoose.Schema(
       required: true,
     },
     tags: Array,
-    required: true,
   },
   { timestamps: true }
 );
