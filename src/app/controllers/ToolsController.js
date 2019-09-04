@@ -38,7 +38,7 @@ class ToolsController {
 
     const tool = await Tools.create(req.body);
 
-    return res.json(tool);
+    return res.status(201).json(tool);
   }
 
   async delete(req, res) {
@@ -50,7 +50,7 @@ class ToolsController {
 
     await Tools.findByIdAndDelete(id);
 
-    return res.json();
+    return res.status(204).json();
   }
 }
 
