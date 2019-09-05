@@ -21,7 +21,7 @@ class UserController {
 
     const { name, email } = await User.create(req.body);
 
-    return res.json({
+    return res.status(201).json({
       name,
       email,
     });
