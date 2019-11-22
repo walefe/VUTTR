@@ -4,7 +4,7 @@ import Tools from '../schemas/Tools';
 class ToolsController {
   async index(req, res) {
     const { tag } = req.query;
-    const tools = await Tools.find();
+    const tools = await Tools.where({ user: req.userId });
 
     if (tag) {
       const tool = await Tools.where({ tags: tag });
@@ -21,22 +21,32 @@ class ToolsController {
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
-      link: Yup.string().required(),
+      link: Yup.string()
+        .url()
+        .required(),
       description: Yup.string().required(),
-      tags: Yup.array(),
+      tags: Yup.array().max(6),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails.' });
     }
 
-    const toolExist = await Tools.findOne({ title: req.body.title });
+    const { title, link, description, tags } = req.body;
+
+    const toolExist = await Tools.findOne({ title });
 
     if (toolExist) {
       return res.status(400).json({ error: 'Tool already exists!' });
     }
 
-    const tool = await Tools.create(req.body);
+    const tool = await Tools.create({
+      title,
+      user: req.userId,
+      link,
+      description,
+      tags,
+    });
 
     return res.status(201).json(tool);
   }
