@@ -4,37 +4,141 @@ FORMAT: 1A
 
 Repositório contendo informações sobre ferramentas utilizadas por desenvolvedores.
 
-# Group API
-
-## Sobre [/]
-
-Aqui podemos descrever detalhes que são comuns a todos os serviços como formatos, headers, tipos de erro, etc
-
-# Group Users
-
-## Users [/users]
+## Usuários [/users]
 
 ### Criar usuário [POST]
 
-+ Request criar usuário
++ Request (application/json)
 
-  + Headers
+        [
+            {
+                "name": "Demo",
+                "email": "demo@teste.com"
+            }
+        ]
 
-          Accept: application/json
-          Content-Type: application/json
-  + Atributes (Users)
++ Response 201 (application/json)
 
-+ Response 201 (applicaton/json)
-  + Atributes (Created)
+        [
+            {
+                "name": "Demo",
+                "email": "demo@teste.com"
+            }
+        ]
 
-# Group Sessions
+## Sessão [/sessions]
 
-## Sessions [/sessions]
+### Criar Sessão [POST]
 
-## Autenticar usuário [POST]
++ Request (application/json)
 
-+ Request autenticar usuário
+        {
+            "email": "demo@teste.com"
+        }
 
-  +Headers
-          Accept: application/json
-          Content-Type: application/json
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "user": {
+                    "id": 12,
+                    "name": "Walefe",
+                    "email": "walefe@rocketseat.com"
+                 },
+                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImlhdCI6MTU3NDI3MDE2NiwiZXhwIjoxNTc0ODc0OTY2fQ.jmB1uhlGv-VVPslAinKx9r7d1gi1Odt5RfJYh5dwfQE"
+            }
+
+## Tools [/tools]
+
+### Listar Tool [GET]
+
++ Headers
+
+    Authorization: Bearer Token
+
++ Response 200 (application/json)
+
+    [
+        {
+            "tags": [
+                "api",
+                "json",
+                "schema",
+                "node",
+                "github",
+                "rest"
+            ],
+            "_id": "5dd7eb963bb89d2ddb7eaaf5",
+            "title": "json",
+            "user": 12,
+            "link": "https://github.com/typicode/json-server",
+            "description": "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+            "createdAt": "2019-11-22T14:07:18.351Z",
+            "updatedAt": "2019-11-22T14:07:18.351Z",
+            "__v": 0
+        }
+    ]
+
+### Criar Tool [POST]
+
++ Headers
+
+    Authorization: Bearer Token
+
++ Request (application/json)
+
+        {
+            "title": "json",
+            "link": "https://github.com/typicode/json-server",
+            "description":"Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+            "tags": [
+                "api",
+                "json",
+                "schema",
+                "node",
+                "github",
+                "rest"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+              "tags": [
+                "api",
+                "json",
+                "schema",
+                "node",
+                "github",
+                "rest"
+              ],
+              "_id": "5dd7eb963bb89d2ddb7eaaf5",
+              "title": "json",
+              "user": 12,
+              "link": "https://github.com/typicode/json-server",
+              "description": "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+              "createdAt": "2019-11-22T14:07:18.351Z",
+              "updatedAt": "2019-11-22T14:07:18.351Z",
+              "__v": 0
+            }
+
+### Deletar Tool [DELETE/{id}]
+
++ Headers
+
+    Authorization: Bearer Token
+
++ Request (application/json)
+
++ Response 204 (application/json)
