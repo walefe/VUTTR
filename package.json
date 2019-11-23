@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "postbuild": " sequelize db:migrate ./src",
     "start": "node dist/server.js"
   },
   "devDependencies": {
